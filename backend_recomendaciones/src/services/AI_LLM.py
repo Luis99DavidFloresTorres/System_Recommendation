@@ -12,17 +12,24 @@ class AI_LLM_Services():
         input= ("<humano> Dame una recomendacion de "
                 "este curso <nombre> "+word['nombrecurso'] +" <monto> "+str(word['monto'])
                 +" <costo> "+str(word['costo'])+ " <asistente> ")
+        print(input)
         respuesta = cls.generarAlumnos(input)
+        print(respuesta)
         #tipo_alumno = cls.tipo_estudiante_recomendado(respuesta.split())
         tipo_alumno = cls.tipo_estudiante_recomendado2(respuesta.split())
-        print('entra',tipo_alumno)
         titulo = " ".join(tipo_alumno['titulo'])
         area = " ".join(tipo_alumno['area'])
         universidad = " ".join(tipo_alumno['universidad'])
         rango_titulacion = " ".join(tipo_alumno['rango_ano_titulacion'])
         rango_edad=" ".join(tipo_alumno['rango_edad'])
+        tipo_alumno['titulo'] = titulo
+        tipo_alumno['area'] = area
+        tipo_alumno['universidad'] = universidad
+        tipo_alumno['rango_ano_titulacion'] = rango_titulacion
+        tipo_alumno['rango_edad'] = rango_edad
+        print(tipo_alumno)
         listEstudiantes = StudentServices.getStudentsRecommendation(titulo, area, universidad,rango_titulacion, rango_edad)
-        return listEstudiantes
+        return listEstudiantes, tipo_alumno
 
     def tipo_estudiante_recomendado(palabraV):
         alumno = {'titulo': 0, 'area': 0, 'universidad': 0, 'rango_ano_titulacion': 0}
