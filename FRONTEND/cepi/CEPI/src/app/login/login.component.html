@@ -1,0 +1,22 @@
+<form [formGroup]="formGroup" fxFlex  fxLayoutAlign="center center" style="margin-top: 50px; ">
+    <section fxLayout="column" fxLayoutGap="30px" style=" height: 300px; width: 300px;">
+    <mat-card fxLayout="column" >
+    <mat-form-field appearance="fill">
+      <mat-label>Ingrese el usuario</mat-label>
+      <input matInput type="text" formControlName="usuario">
+      <mat-error></mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+        <mat-label>Contraseña</mat-label>
+        <input matInput formControlName="contrasena" [type]="mostrarPassword ? 'text' : 'password'" placeholder="Ingrese su contraseña">
+        <button mat-icon-button matSuffix (click)="mostrarPassword = !mostrarPassword">
+          <mat-icon>{{ mostrarPassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+        </button>
+      <mat-error></mat-error>
+    </mat-form-field>
+    <div  fxLayoutAlign="center center" >
+        <button mat-fab color="primary" (click)="ingresar()"><mat-icon>login</mat-icon></button>
+    </div>
+    </mat-card>
+  </section>
+  </form>

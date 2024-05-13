@@ -1,0 +1,35 @@
+
+  <mat-sidenav-container>
+    <mat-sidenav-content>
+      <mat-toolbar color="primary">
+        <div fxLayout="row" >
+            <div  fxLayoutAlign="center center" fxLayoutGap = "10px"> 
+              <button *ngIf="usuario || admin" mat-raised-button [matMenuTriggerFor]="recomendaciones">Recomendaciones</button>
+              <button *ngIf="usuario || admin" mat-raised-button [matMenuTriggerFor]="cursantes">Cursantes</button>
+              <button *ngIf="admin" mat-raised-button [matMenuTriggerFor]="usuarios">Usuarios</button>
+              <button *ngIf="usuario || admin" mat-raised-button >Credenciales</button>
+            </div>
+            <div *ngIf="usuario || admin" fxLayoutAlign="end center"><button mat-raised-button (click)="logout()"><mat-icon>logout</mat-icon></button></div>
+          
+        </div>
+        <mat-menu #recomendaciones="matMenu" >
+      
+          <button  mat-menu-item routerLink="/recomendar">Recomendar</button>
+          <button  mat-menu-item routerLink="/historial">Historial</button>
+        </mat-menu>
+        <mat-menu #cursantes="matMenu" >
+      
+          <button  mat-menu-item routerLink="/cursantesMostrar">Mostrar</button>
+          <button  mat-menu-item routerLink="/cursantesInsertar">Insertar</button>
+        </mat-menu>
+        <mat-menu #usuarios="matMenu" >
+          <button  mat-menu-item routerLink="/usuariosMostrar">Mostrar</button>
+          <button  mat-menu-item routerLink="/usuariosInsertar">Insertar</button>
+        </mat-menu>
+      </mat-toolbar>
+      <main>
+        <router-outlet></router-outlet>
+      </main>
+    </mat-sidenav-content>
+  
+  </mat-sidenav-container>

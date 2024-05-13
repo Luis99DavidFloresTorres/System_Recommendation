@@ -15,9 +15,11 @@ from sqlalchemy import create_engine
 app = Flask(__name__)
 cors = CORS(app)
 jwt = JWTManager()
-tokenizer = AutoTokenizer.from_pretrained("DeepESP/gpt2-spanish-medium")
+#tokenizer = AutoTokenizer.from_pretrained("DeepESP/gpt2-spanish-medium")
 #model = AutoModelForCausalLM.from_pretrained("src/gpt2_sin_cursos_ensenanza")
-model = AutoModelForCausalLM.from_pretrained("src/gpt2_con_cursos_ensenanza")
+#model = AutoModelForCausalLM.from_pretrained("src/gpt2_con_cursos_ensenanza")
+'''tokenizer = AutoTokenizer.from_pretrained("LuisDavidFT777/gpt2-spanish-medium")
+model = AutoModelForCausalLM.from_pretrained("LuisDavidFT777/gpt2-spanish-medium")
 generation_config = model.generation_config
 generation_config.max_new_tokens=100
 generation_config.pad_token_id=tokenizer.eos_token_id
@@ -26,7 +28,7 @@ generation_config.num_return_sequence=1
 generation_config.top_p=0.1 # de acuerdo a las probabilidades de las palabras, mientras mas bajo menos incoherente
 #generation_config.top_k= 7 # escoge las 7 mas probables palabras
 generation_config.temperature=0.1
-generation_config.do_sample=True
+generation_config.do_sample=True'''
 
 def init_app():
     #app.config.from_object(config)
@@ -40,8 +42,7 @@ def init_app():
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     app.config["JWT_ALGORITHM"] = "HS256"
     app.config['SECRET_KEY'] = 'caac3c307a8dc042c4518d91'
-    app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=18)
-    app.config["JWT_REFRESH_TOKEN_EXPIRES"] = timedelta(days=30)
+    app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(days=1600)
     db.init_app(app)
     jwt.init_app(app)
     @jwt.user_lookup_loader
@@ -63,9 +64,9 @@ def init_app():
         return jsonify({"message": "Request doesnt contain valid token", "error": "token_expired"}), 401
     @jwt.token_in_blocklist_loader
     def token_in_blocklist_callback(jwt_header,jwt_data):
-        print('entra')
+
         id = jwt_data['sub']
-        print(id)
+
         token = Token_block_list.query.filter_by(idU=id).scalar()
         return token is not None
     return app

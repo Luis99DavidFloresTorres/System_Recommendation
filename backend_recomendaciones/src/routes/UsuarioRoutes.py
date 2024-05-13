@@ -10,7 +10,7 @@ usuario = Blueprint('Usuario_blueprint', __name__)
 def buscar(usuario, contrasena):
     usuario = UsuarioServices.findUsuario(usuario, contrasena)
     us = Token_block_list.query.filter_by(idU=usuario.idusuario).one_or_none()
-    print(us)
+
     if us:
         us.delete()
     access_token = create_access_token(identity=usuario.idusuario)
@@ -19,11 +19,15 @@ def buscar(usuario, contrasena):
                              'refresh':refresh_token}})
     if usuario:
         return jsn,200
-    return '{mensaje:error base de datos}',500
+    return {'mensaje':'error base de datos'},500
 @usuario.route('claims', methods=['GET'])
 @jwt_required()
 def claims():
-    jsn = jsonify({'user_details': current_user})
+    print('entra')
+    print(current_user)
+    serializable_user = {key: value for key, value in current_user.items() if
+                         isinstance(value, (int, float, str, list, dict))}
+    jsn = jsonify({'user_details': serializable_user})
     return jsn, 200
 @usuario.route('out', methods=['GET'])
 @jwt_required()
@@ -31,7 +35,15 @@ def logout():
     id = current_user['id']
     tkn = Token_block_list(idU=id)
     tkn.save()
-    return {'res':'exito'}, 20
+    return {'res':'exito'}, 200
+@usuario.route('estadoUsuario', methods=['GET'])
+@jwt_required()
+def estadoUser():
+
+    print(current_user)
+    token = Token_block_list.query.filter_by(idU=current_user['id']).scalar()
+    jsn = jsonify({'token':token})
+    return jsn, 200
 
 @usuario.route('buscarTodos', methods=['GET'])
 #@jwt_required()
@@ -45,6 +57,7 @@ def findById(id):
     estudiante = UsuarioServices.getById(id)
     jsn = jsonify({'usuario':estudiante})
     return jsn, 200
+
 @usuario.route('eliminarUsuario/<id>', methods=['POST'])
 def eliminar(id):
     result = UsuarioServices.eliminarEstudiante(id)
