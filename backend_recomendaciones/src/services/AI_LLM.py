@@ -10,8 +10,7 @@ class AI_LLM_Services():
     @classmethod
     def obtener_respuesta(cls, word):
         input= ("<humano> Dame una recomendacion de "
-                "este curso <nombre> "+word['nombrecurso'] +" <monto> "+str(word['monto'])
-                +" <costo> "+str(word['costo'])+ " <asistente> ")
+                "este curso <nombre> "+word['nombrecurso']+ " <asistente> ")
         print(input)
         respuesta = cls.generarAlumnos(input)
         print(respuesta)

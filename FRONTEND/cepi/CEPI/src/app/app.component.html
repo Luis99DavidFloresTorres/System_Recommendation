@@ -7,7 +7,7 @@
             <button *ngIf="usuario || admin" mat-raised-button [matMenuTriggerFor]="recomendaciones">Recomendaciones</button>
             <button *ngIf="usuario || admin" mat-raised-button [matMenuTriggerFor]="cursantes">Cursantes</button>
             <button *ngIf="admin" mat-raised-button [matMenuTriggerFor]="usuarios">Usuarios</button>
-            <button *ngIf="usuario || admin" mat-raised-button >Credenciales</button>
+            <button *ngIf="usuario || admin" mat-raised-button (click)="credencial()">Credenciales</button>
            
           </div>
          

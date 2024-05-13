@@ -21,6 +21,7 @@ import { EstadoPipe } from './recomendaciones/estudiantes-recomendaciones/estado
 import { registerLocaleData } from '@angular/common';
 import localEs from '@angular/common/locales/es'
 import { RegistrarComponent } from './cursantes/registrar/registrar.component';
+import { CredencialesComponent } from './usuarios/credenciales/credenciales.component';
 registerLocaleData(localEs,'es')
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ registerLocaleData(localEs,'es')
     MostrarComponent,
     RegistrarComponent,
     DialogComponent,
-    EstadoPipe
+    EstadoPipe,
+    CredencialesComponent
   ],
   imports: [
     BrowserModule,

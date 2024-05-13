@@ -46,6 +46,6 @@ export class MostrarComponent {
   }
   editar(id:any){
     this.service.id=id
-    this.route.navigateByUrl('/registrarCursante')
+    this.route.navigateByUrl('/cursantesRegistrar')
   }
 }

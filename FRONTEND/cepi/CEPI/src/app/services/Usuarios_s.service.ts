@@ -62,7 +62,7 @@ export class ServiceUsuario{
     var headers = new HttpHeaders();
     headers = headers.set('Content-Type', 'application/json');
     headers = headers.set('Authorization', `Bearer ${jwt}`);
-    this.http.post<any>(this.baseUrl+'usuario/agregarUsuario',mandar, {headers}).subscribe(data=>{
+    this.http.post<any>(this.baseUrl+'usuario/guardarUsuario',mandar, {headers}).subscribe(data=>{
      
         if(data.res=='correcto'){
             alert('Se guardó con éxito')

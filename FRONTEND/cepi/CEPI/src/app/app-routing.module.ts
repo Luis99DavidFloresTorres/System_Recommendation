@@ -8,13 +8,17 @@ import { EstudiantesRecomendacionesComponent } from './recomendaciones/historial
 import { SoloRecomendacionesComponent } from './recomendaciones/historial/solo-recomendaciones/solo-recomendaciones.component';
 import { RegistrarUComponent } from './usuarios/registrar-u/registrar-u.component';
 import { RegistrarComponent } from './cursantes/registrar/registrar.component';
+import { CredencialesComponent } from './usuarios/credenciales/credenciales.component';
+import { RecomendarComponent } from './recomendaciones/recomendar/recomendar.component';
 
 const routes: Routes = [{ path:'', component: LoginComponent},
 { path:'cursantesMostrar', component: MostrarComponent, canActivate:[guardsGuard]},
 { path:'usuariosMostrar', component: MostrarUComponent, canActivate:[guardsGuard]},
 { path:'usuariosRegistrar', component: RegistrarUComponent, canActivate:[guardsGuard]},
 { path:'cursantesRegistrar', component: RegistrarComponent, canActivate:[guardsGuard]},
-{ path:'historial', component: SoloRecomendacionesComponent, canActivate:[guardsGuard]}
+{ path:'historial', component: SoloRecomendacionesComponent, canActivate:[guardsGuard]},
+{ path:'credenciales', component: CredencialesComponent, canActivate:[guardsGuard]},
+{ path:'recomendar', component: RecomendarComponent, canActivate:[guardsGuard]}
   
 ];
 

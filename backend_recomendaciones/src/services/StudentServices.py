@@ -86,8 +86,7 @@ class StudentServices():
         if edad > 46:
             return '47-mayor'
     @classmethod
-    def editarEstudiante(cls, id, nombreu, area, titulo, nombrecompleto, rangoEdad, rangoTitulacion):
-
+    def editarEstudiante(cls, id, nombreu, area, titulo, nombrecompleto, rangoEdad, rangoTitulacion, celular):
         try:
             estudiante = Student.query.get(id)
             estudiante.nombrecompleto=nombrecompleto
@@ -96,6 +95,7 @@ class StudentServices():
             estudiante.edad_rango = rangoEdad
             estudiante.rango_ano_titulacion = rangoTitulacion
             estudiante.area = area
+            estudiante.celular = celular
             db.session.commit()
             return 1
         except Exception as e:

@@ -49,7 +49,7 @@ def init_app():
     def user_lookup_loader(jwt_header,jwt_data):
         identity = jwt_data['sub']
         usuario = Usuario.query.filter_by(idusuario=identity).one_or_none()
-        json = {'id':usuario.idusuario,'usuario':usuario.usuario,'tipo':usuario.tipo}
+        json = {'id':usuario.idusuario,'usuario':usuario.usuario,'tipo':usuario.tipo,'contrasena':usuario.contrasena}
         return json
     @jwt.expired_token_loader
     def expired_token_callback(jwt_header,jwt_data):

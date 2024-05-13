@@ -44,8 +44,9 @@ export class SoloRecomendacionesComponent {
     this.dataSource.paginator=this.pag;
   }
   mostrar(id:any){
-    const dialogRef = this.dialog.open(EstudiantesRecomendacionesComponent, {
+    var dialogRef = this.dialog.open(EstudiantesRecomendacionesComponent, {
       data: {'id':id},
     });
+    dialogRef.close()
   }
 }

@@ -11,6 +11,7 @@ export class ServiceCursante{
   sujetoEditar = new Subject<any>();
   sujetoGuardar = new Subject<any>();
   sujetoById = new Subject<any>();
+  sujetoTitulos = new Subject<any>();
   id:any;
   constructor(private http:HttpClient){
   }
@@ -72,6 +73,14 @@ export class ServiceCursante{
         }
       })
   }
+  titulosNombre(){
+   
+    this.http.get<any>('assets/titulos.json').subscribe(data=>{
+     
+        this.sujetoTitulos.next(data)
+      })
+  }
+
   mostrar(){
     var jwt = localStorage.getItem('access')
     var headers = new HttpHeaders();
@@ -87,5 +96,8 @@ export class ServiceCursante{
   }
   listenerById(){
     return this.sujetoById.asObservable();
+  }
+  listenerTitulosNombre(){
+    return this.sujetoTitulos.asObservable();
   }
 }

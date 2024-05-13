@@ -1,8 +1,11 @@
+import { Dialog } from '@angular/cdk/dialog';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { Subscription } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
+import { Subject, Subscription, takeUntil } from 'rxjs';
 import { cursante } from 'src/app/models/cursante.model';
 import { ServiceCursante } from 'src/app/services/Cursantes_s.services';
+import { DialogComponent } from './dialog/dialog.component';
 
 @Component({
   selector: 'app-registrar',
@@ -16,7 +19,8 @@ export class RegistrarComponent {
   areas= ['tecnológicas','humanidades y sociales','ciencias de la salud','ciencias económicas','ciencias agrarias']
   tipos=['Admin','Usuario']
   formGroup:FormGroup|any;
-  constructor(private formBuilder:FormBuilder, private service:ServiceCursante){
+  private unsubscribe: Subject<void> = new Subject<void>();
+  constructor(private formBuilder:FormBuilder, private service:ServiceCursante, private matDialog:MatDialog){
     this.formGroup = this.formGroup= this.formBuilder.group({
       id:[''],
       nombre:[''],
@@ -48,18 +52,27 @@ export class RegistrarComponent {
     }
     this.service.id=-1
   }
- 
+  titulos(){
+    var dialog = this.matDialog.open(DialogComponent,{})
+    dialog.afterClosed().pipe(
+      takeUntil(this.unsubscribe)
+    ).subscribe(result => {
+      this.formGroup.get('titulo').setValue(result)
+    });
+   
+  }
+  
   registrar(){
-    var id=this.formGroup.get('id')
-    var nombre=this.formGroup.get('nombre')
-    var universidad=this.formGroup.get('universidad')
-    var edad=this.formGroup.get('edad')
-    var area=this.formGroup.get('area')
-    var tituloR=this.formGroup.get('titulacion')
-    var titulo = this.formGroup.get('titulo')
-    var celular = this.formGroup.get('celular')
+    var id=this.formGroup.get('id').value
+    var nombre=this.formGroup.get('nombre').value
+    var universidad=this.formGroup.get('universidad').value
+    var edad=this.formGroup.get('edad').value
+    var area=this.formGroup.get('area').value
+    var tituloR=this.formGroup.get('titulacion').value
+    var titulo = this.formGroup.get('titulo').value
+    var celular = this.formGroup.get('celular').value
     var cursante:cursante ={'id':id,'nombrecompleto':nombre,'nombretitulo':titulo,'nombreuniversidad':universidad,'celular':celular,'area':area,'edad_rango':edad,'rango_ano_titulacion':tituloR}
-    if(this.service.id!=undefined && this.service.id!=-1){
+    if(this.service.id!=undefined && this.service.id>=0){
       this.service.editar(cursante)
     }else{
       this.service.agregar(cursante);

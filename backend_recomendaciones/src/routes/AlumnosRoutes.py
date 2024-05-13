@@ -42,7 +42,7 @@ def agregar():
 def editar():
     body = request.json
     idE,nombreU,area,titulo,nombreC,celular,edadR,titulacionR=atributes_json(body)
-    result= StudentServices.editarEstudiante(idE,nombreU,area,titulo,nombreC,edadR,titulacionR)
+    result= StudentServices.editarEstudiante(idE,nombreU,area,titulo,nombreC,edadR,titulacionR,celular)
     if result==1:
         return {'res':'correcto'},200
     return {'res': 'no se pudo guardar'}, 500
@@ -55,10 +55,10 @@ def eliminar(id):
 
 def atributes_json(body):
     id = body['id']
-    nombreUniversidad =body['universidad']
+    nombreUniversidad =body['nombreuniversidad']
     area = body['area']
-    titulo = body['titulo']
-    nombreCompleto = body['nombre_completo']
+    titulo = body['nombretitulo']
+    nombreCompleto = body['nombrecompleto']
     celular = body['celular']
     edad_rango = body['edad_rango']
     rango_titulacion = body['rango_ano_titulacion']

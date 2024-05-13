@@ -1,4 +1,6 @@
+import { DialogRef } from '@angular/cdk/dialog';
 import { Component, ViewChild } from '@angular/core';
+import { MatDialogRef } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -12,15 +14,16 @@ import { ServiceCursante } from 'src/app/services/Cursantes_s.services';
   styleUrls: ['./dialog.component.css']
 })
 export class DialogComponent {
-  displayedColumns= ["nombreuniversidad","botones"];
+  displayedColumns= ["nombretitulo","botones"];
   dataSource = new MatTableDataSource<any>();
   sujeto:Subscription|any;
   @ViewChild(MatSort) sort: MatSort | any;
   @ViewChild(MatPaginator) pag: MatPaginator|any;
-  constructor(private service:ServiceCursante,private route:Router ){
-    service.mostrar()
-    this.sujeto = service.listenerMostrar().subscribe(data=>{
-      this.dataSource.data =data.estudiantes
+  constructor(private service:ServiceCursante,private route:Router, private dialogRef:MatDialogRef<DialogComponent> ){
+    service.titulosNombre()
+    this.sujeto = service.listenerTitulosNombre().subscribe(data=>{
+      console.log(data)
+      this.dataSource.data =data
     })
     this.service.id=-1
   }
@@ -37,15 +40,9 @@ export class DialogComponent {
     this.dataSource.sort = this.sort;
     this.dataSource.paginator=this.pag;
   }
-  eliminar(id:any){
-    
-    const result = confirm('¿Está seguro de que desea eliminar?');
-    if (result) {
-      this.service.eliminar(id)
-    }
-  }
-  editar(id:any){
-    this.service.id=id
-    this.route.navigateByUrl('/registrarCursante')
+ 
+  elegir(nombre:any){
+ 
+    this.dialogRef.close(nombre)
   }
 }

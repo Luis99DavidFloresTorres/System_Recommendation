@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ServiceUsuario } from './services/Usuarios_s.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -12,7 +13,7 @@ export class AppComponent {
   usuario = false;
   admin = false;
   sujeto: Subscription|any;
-  constructor(private service:ServiceUsuario){
+  constructor(private service:ServiceUsuario, private route:Router){
     if(this.sujeto!=undefined) {
       this.sujeto.unsubscribe();
     }
@@ -56,5 +57,8 @@ export class AppComponent {
   }
  logout(){
   this.service.out();
+ }
+ credencial(){
+  this.route.navigateByUrl('/credenciales')
  }
 }
