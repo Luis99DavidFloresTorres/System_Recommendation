@@ -16,13 +16,14 @@ export class AppComponent {
     if(this.sujeto!=undefined) {
       this.sujeto.unsubscribe();
     }
-    console.log(localStorage.getItem('access'))
+    
    if(localStorage.getItem('access')!=undefined){
     this.claim()
 
    }
    
     this.sujeto = this.service.listenerBotones().subscribe(async data=>{
+      console.log("entra")
         var usuario:any = await this.service.claims()
         if(usuario.user_details.tipo=='Admin'){
             this.admin=true;

@@ -11,6 +11,7 @@ export class ServiceUsuario{
   sujetoEditar = new Subject<any>();
   sujetoGuardar = new Subject<any>();
   sujetoBotones= new Subject<any>();
+  sujetoById = new Subject<any>();
   id:any;
   constructor(private http:HttpClient){
   }
@@ -76,6 +77,17 @@ export class ServiceUsuario{
         }
     })
   }
+  findById(id:any){
+    var jwt = localStorage.getItem('access')
+    var headers = new HttpHeaders();
+    headers = headers.set('Content-Type', 'application/json');
+    headers = headers.set('Authorization', `Bearer ${jwt}`);
+    this.http.get<any>(this.baseUrl+'usuario/findById/'+id, {headers}).subscribe(data=>{
+           this.sujetoById.next(data.usuario)
+    })
+
+  }
+
   eliminar(id:any){
     var jwt = localStorage.getItem('access')
     var headers = new HttpHeaders();
@@ -118,5 +130,8 @@ export class ServiceUsuario{
   }
   listenerBotones(){
     return this.sujetoBotones.asObservable();
+  }
+  listenerById(){
+    return this.sujetoById.asObservable();
   }
 }

@@ -36,8 +36,8 @@ class StudentServices():
             list = []
 
             for i in todos:
-                json = {'id':i.id,'nombre_completo':i.nombrecompleto,'celular':i.celular,'titulo':i.nombretitulo,
-                 'universidad':i.nombreuniversidad,'area':i.area, 'rango_ano_titulacion':i.rango_ano_titulacion,
+                json = {'id':i.id,'nombrecompleto':i.nombrecompleto,'celular':i.celular,'nombretitulo':i.nombretitulo,
+                 'nombreuniversidad':i.nombreuniversidad,'area':i.area, 'rango_ano_titulacion':i.rango_ano_titulacion,
                         'edad_rango':i.edad_rango}
                 list.append(json)
             return list

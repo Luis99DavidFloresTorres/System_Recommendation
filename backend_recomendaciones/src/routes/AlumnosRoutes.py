@@ -14,7 +14,7 @@ def buscar():
     jsn = jsonify({'estudiantes': listaEstudiantes, 'tipo_estudiante':tipoEstudiante})
     return jsn, 200
 @main.route('buscarTodos', methods=['GET'])
-#@jwt_required()
+@jwt_required()
 def buscarTodos():
     listaEstudiantes= StudentServices.obtenerTodos()
     #StudentServices.getStudentsRecommendation(body)

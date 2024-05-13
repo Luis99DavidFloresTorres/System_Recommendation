@@ -7,12 +7,12 @@ import { Subscription } from 'rxjs';
 import { ServiceCursante } from 'src/app/services/Cursantes_s.services';
 
 @Component({
-  selector: 'app-mostrar',
-  templateUrl: './mostrar.component.html',
-  styleUrls: ['./mostrar.component.css']
+  selector: 'app-dialog',
+  templateUrl: './dialog.component.html',
+  styleUrls: ['./dialog.component.css']
 })
-export class MostrarComponent {
-  displayedColumns= ['nombrecompleto','nombretitulo','area',"edad_rango","rango_ano_titulacion","celular","nombreuniversidad","botones"];
+export class DialogComponent {
+  displayedColumns= ["nombreuniversidad","botones"];
   dataSource = new MatTableDataSource<any>();
   sujeto:Subscription|any;
   @ViewChild(MatSort) sort: MatSort | any;

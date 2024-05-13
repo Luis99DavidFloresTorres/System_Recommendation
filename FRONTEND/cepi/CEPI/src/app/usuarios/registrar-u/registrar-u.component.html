@@ -1,0 +1,31 @@
+<div fxLayoutAlign="center center">
+    
+  <mat-card  style="width: 20%;"  fxLayout="column">
+    <mat-card-header fxLayoutAlign="center center">
+        <mat-card-title>Registro Usuario</mat-card-title>
+      </mat-card-header>
+    <mat-card-content>
+        <form fxLayoutAlign="center center" [formGroup]="formGroup" fxLayout="column">
+            <mat-form-field style="width: 90%;">
+                <mat-label>Usuario</mat-label>
+                <input  formControlName="usuario" matInput>
+              </mat-form-field>
+              <mat-form-field style="width: 90%;">
+                <mat-label>Contraseña</mat-label>
+                <input formControlName="contrasena" matInput>
+              </mat-form-field>
+              <mat-form-field style="width: 90%;">
+                <mat-label>Select</mat-label>
+                <mat-select formControlName="tipo">
+                  <mat-option *ngFor="let tipo of tipos" [value]="tipo">{{tipo}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+              <div style="width: 100%;"  fxLayoutAlign="center center" >
+                <button style="width: 50%;" mat-raised-button color="primary" (click)="registrar()">Registrar</button>
+            </div>
+              
+        </form>
+    </mat-card-content>
+  </mat-card>
+
+</div>

@@ -10,13 +10,17 @@ export class ServiceCursante{
   subjetoTodos = new Subject<any>();
   sujetoEditar = new Subject<any>();
   sujetoGuardar = new Subject<any>();
+  sujetoById = new Subject<any>();
   id:any;
   constructor(private http:HttpClient){
   }
 
   agregar(mandar:any){
-    
-    this.http.post<any>(this.baseUrl+'alumnos/guardarEstudiante',mandar).subscribe(data=>{
+    var jwt = localStorage.getItem('access')
+    var headers = new HttpHeaders();
+    headers = headers.set('Content-Type', 'application/json');
+    headers = headers.set('Authorization', `Bearer ${jwt}`);
+    this.http.post<any>(this.baseUrl+'alumnos/guardarEstudiante',mandar, {headers}).subscribe(data=>{
      
         if(data.res=='correcto'){
             alert('Se guardó con éxito')
@@ -31,15 +35,33 @@ export class ServiceCursante{
         }
     })
   }
+  findById(id:any){
+    var jwt = localStorage.getItem('access')
+    var headers = new HttpHeaders();
+    headers = headers.set('Content-Type', 'application/json');
+    headers = headers.set('Authorization', `Bearer ${jwt}`);
+    this.http.get<any>(this.baseUrl+'alumnos/findById/'+id, {headers}).subscribe(data=>{
+           this.sujetoById.next(data.estudiante)
+    })
+
+  }
   eliminar(id:any){
-    this.http.post<any>(this.baseUrl+'alumnos/eliminarEstudiante/'+id,id).subscribe(data=>{
+    var jwt = localStorage.getItem('access')
+    var headers = new HttpHeaders();
+    headers = headers.set('Content-Type', 'application/json');
+    headers = headers.set('Authorization', `Bearer ${jwt}`);
+    this.http.post<any>(this.baseUrl+'alumnos/eliminarEstudiante/'+id,id,{headers}).subscribe(data=>{
      
         alert('Se eliminó con éxito')
         location.reload()
       })
   }
   editar(mandar:any){
-    this.http.post<any>(this.baseUrl+'alumnos/editarEstudiante',mandar).subscribe(data=>{
+    var jwt = localStorage.getItem('access')
+    var headers = new HttpHeaders();
+    headers = headers.set('Content-Type', 'application/json');
+    headers = headers.set('Authorization', `Bearer ${jwt}`);
+    this.http.post<any>(this.baseUrl+'alumnos/editarEstudiante',mandar,{headers}).subscribe(data=>{
      
         if(data.res=='correcto'){
             alert('Se guardó con éxito')
@@ -51,12 +73,19 @@ export class ServiceCursante{
       })
   }
   mostrar(){
-    this.http.get<any>(this.baseUrl+'api/alumnos/buscarTodos').subscribe(data=>{
+    var jwt = localStorage.getItem('access')
+    var headers = new HttpHeaders();
+    headers = headers.set('Content-Type', 'application/json');
+    headers = headers.set('Authorization', `Bearer ${jwt}`);
+    this.http.get<any>(this.baseUrl+'/alumnos/buscarTodos',{headers}).subscribe(data=>{
      
         this.subjetoTodos.next(data)
       })
   }
   listenerMostrar(){
     return this.subjetoTodos.asObservable();
+  }
+  listenerById(){
+    return this.sujetoById.asObservable();
   }
 }

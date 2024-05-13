@@ -10,9 +10,9 @@
         <table mat-table [dataSource]="dataSource" matSort >
   
           
-            <ng-container matColumnDef="estado">
-              <th mat-header-cell *matHeaderCellDef mat-sort-header> Estado </th>
-              <td mat-cell *matCellDef="let element"> {{element.estado | estado}} </td>
+            <ng-container matColumnDef="nombreuniversidad">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Universidad </th>
+              <td mat-cell *matCellDef="let element"> {{element.nombreuniversidad}} </td>
             </ng-container>
           
   
@@ -42,8 +42,8 @@
               </ng-container>
               <ng-container matColumnDef="botones">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Acciones </th>
-                <td mat-cell *matCellDef="let element"> <button color="primary" mat-raised-button (click)="mostrar(element.id)"><mat-icon>person</mat-icon></button>
- 
+                <td mat-cell *matCellDef="let element"> <button color="primary" mat-raised-button (click)="editar(element.id)"><mat-icon>edit</mat-icon></button>
+                  <button color="warn" (click)="eliminar(element.id)" mat-raised-button><mat-icon>delete</mat-icon></button> 
                 </td>
               </ng-container>
               <ng-container matColumnDef="celular">

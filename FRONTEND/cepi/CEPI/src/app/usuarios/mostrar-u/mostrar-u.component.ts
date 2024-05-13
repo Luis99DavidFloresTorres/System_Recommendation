@@ -5,22 +5,23 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ServiceCursante } from 'src/app/services/Cursantes_s.services';
+import { ServiceUsuario } from 'src/app/services/Usuarios_s.service';
 
 @Component({
-  selector: 'app-mostrar',
-  templateUrl: './mostrar.component.html',
-  styleUrls: ['./mostrar.component.css']
+  selector: 'app-mostrar-u',
+  templateUrl: './mostrar-u.component.html',
+  styleUrls: ['./mostrar-u.component.css']
 })
-export class MostrarComponent {
-  displayedColumns= ['nombrecompleto','nombretitulo','area',"edad_rango","rango_ano_titulacion","celular","nombreuniversidad","botones"];
+export class MostrarUComponent {
+  displayedColumns= ["usuario","contrasena","tipo","botones"];
   dataSource = new MatTableDataSource<any>();
   sujeto:Subscription|any;
   @ViewChild(MatSort) sort: MatSort | any;
   @ViewChild(MatPaginator) pag: MatPaginator|any;
-  constructor(private service:ServiceCursante,private route:Router ){
+  constructor(private service:ServiceUsuario,private route:Router ){
     service.mostrar()
     this.sujeto = service.listenerMostrar().subscribe(data=>{
-      this.dataSource.data =data.estudiantes
+      this.dataSource.data =data.usuarios
     })
     this.service.id=-1
   }
@@ -46,6 +47,6 @@ export class MostrarComponent {
   }
   editar(id:any){
     this.service.id=id
-    this.route.navigateByUrl('/registrarCursante')
+    this.route.navigateByUrl('/usuariosRegistrar')
   }
 }

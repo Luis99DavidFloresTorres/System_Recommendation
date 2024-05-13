@@ -9,7 +9,7 @@ class RecomendacionesStudentServices():
             query = Recomendacion.query.filter_by(id=id)
             list = []
             for i in query[0].r_student:
-                jsn = {'id': i.id, 'celular': i.celular,'nombre':i.nombrecompleto}
+                jsn = {'id': i.id, 'celular': i.celular,'nombre':i.nombrecompleto,'estado':i.estado}
                 list.append(jsn)
             print(list)
             return list
