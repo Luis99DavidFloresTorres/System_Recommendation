@@ -25,7 +25,7 @@ export class ServiceUsuario{
             }else{
                 localStorage.setItem('access',data.tokens.access)
                 this.sujetoBotones.next(undefined);
-                console.log(localStorage.getItem('access'))
+                this.route.navigateByUrl('/recomendar')
             }
            
     })
