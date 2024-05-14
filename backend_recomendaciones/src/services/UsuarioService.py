@@ -6,9 +6,14 @@ import secrets
 class UsuarioServices():
     @classmethod
     def findUsuario(cls, usuario,contrasena):
-        usuario = Usuario.query.filter_by(usuario=usuario, contrasena=contrasena).all()
-        a = "caac3c307a8dc042c4518d91"
-        return usuario[0]
+        try:
+            usuario = Usuario.query.filter_by(usuario=usuario, contrasena=contrasena).one_or_none()
+            a = "caac3c307a8dc042c4518d91"
+            if usuario is None:
+                return 0
+            return usuario
+        except Exception as e:
+            return 2
     @classmethod
     def getById(cls,id):
         estudiante = Usuario.query.filter_by(idusuario=id)
@@ -31,10 +36,14 @@ class UsuarioServices():
     @classmethod
     def agregarUsuario(cls, usuario, contrasena, tipo):
         try:
-            usuario = Usuario(usuario=usuario,contrasena=contrasena,tipo=tipo)
-            db.session.add(usuario)
-            db.session.commit()
-            return 1
+            us = Usuario.query.filter_by(usuario=usuario, contrasena=contrasena, tipo=tipo).one_or_none()
+            if us is None:
+                usuario = Usuario(usuario=usuario,contrasena=contrasena,tipo=tipo)
+                db.session.add(usuario)
+                db.session.commit()
+                return 1
+            else:
+                return 3
         except Exception as exp:
             return 0
     @classmethod

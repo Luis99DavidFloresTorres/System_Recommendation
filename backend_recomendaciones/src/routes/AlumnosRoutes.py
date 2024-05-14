@@ -32,9 +32,7 @@ def findById(id):
 @jwt_required()
 def agregar():
     body = request.json
-    print(request.json)
-    print(body)
-    result = StudentServices.agregarEstudiante(body['id'],body['nombreuniversidad']
+    result = StudentServices.agregarEstudiante(body['nombreuniversidad']
                                       ,body['area'],body['nombretitulo'],body['nombrecompleto'],
                                       body['celular'],body['edad_rango'],body['rango_ano_titulacion'])
     if result==1:
@@ -46,7 +44,9 @@ def agregar():
 @jwt_required()
 def editar():
     body = request.json
+
     idE,nombreU,area,titulo,nombreC,celular,edadR,titulacionR=atributes_json(body)
+
     result= StudentServices.editarEstudiante(idE,nombreU,area,titulo,nombreC,edadR,titulacionR,celular)
     if result==1:
         return {'res':'correcto'},200

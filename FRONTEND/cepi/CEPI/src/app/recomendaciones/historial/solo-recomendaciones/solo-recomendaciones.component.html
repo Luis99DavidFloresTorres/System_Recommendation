@@ -22,9 +22,13 @@
               <th mat-header-cell *matHeaderCellDef mat-sort-header> Curso </th>
               <td mat-cell *matCellDef="let element"> {{element.curso}} </td>
             </ng-container>
+            <ng-container matColumnDef="usuario">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Usuario </th>
+              <td mat-cell *matCellDef="let element"> {{element.usuario}} </td>
+            </ng-container>
               <ng-container matColumnDef="botones">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Acciones </th>
-                <td mat-cell *matCellDef="let element"> <button color="primary" mat-raised-button (click)="mostrar(element.id)"><mat-icon>account_circle</mat-icon></button>
+                <td mat-cell *matCellDef="let element"> <button color="primary" mat-raised-button (click)="mostrar(element.id)"><div ><mat-icon style="margin-top: 5px; ">account_circle</mat-icon><h3 fxFlex style="margin-top: 2px;">Estudiantes</h3></div></button>
  
                 </td>
               </ng-container>

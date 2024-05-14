@@ -44,13 +44,9 @@ class StudentServices():
         except Exception as exp:
             print(exp)
     @classmethod
-    def agregarEstudiante(cls, id, nombreu, area, titulo, nombrecompleto,celular,edad_rango,rango_titulacion):
+    def agregarEstudiante(cls,nombreu, area, titulo, nombrecompleto,celular,edad_rango,rango_titulacion):
         try:
-            estudiante = Student.query.filter_by(id=id).first()
-            if estudiante:
-                print("entra")
-                return 2
-            estudiante = Student(id=id,nombreuniversidad=nombreu,
+            estudiante = Student(nombreuniversidad=nombreu,
                                  area=area,nombretitulo=titulo,
                                  nombrecompleto=nombrecompleto,
                                  celular=celular,edad_rango=edad_rango,
@@ -88,6 +84,7 @@ class StudentServices():
     @classmethod
     def editarEstudiante(cls, id, nombreu, area, titulo, nombrecompleto, rangoEdad, rangoTitulacion, celular):
         try:
+
             estudiante = Student.query.get(id)
             estudiante.nombrecompleto=nombrecompleto
             estudiante.nombreuniversidad=nombreu

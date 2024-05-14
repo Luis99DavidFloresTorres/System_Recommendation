@@ -12,6 +12,7 @@ export class ServiceCursante{
   sujetoGuardar = new Subject<any>();
   sujetoById = new Subject<any>();
   sujetoTitulos = new Subject<any>();
+  sujetoBuscarRecomendacion = new Subject<any>();
   id:any;
   constructor(private http:HttpClient){
   }
@@ -72,6 +73,19 @@ export class ServiceCursante{
             alert('No se pudo guardar')
         }
       })
+  }
+  buscar(mandar:any){
+    var jwt = localStorage.getItem('access')
+    var headers = new HttpHeaders();
+    headers = headers.set('Content-Type', 'application/json');
+    headers = headers.set('Authorization', `Bearer ${jwt}`);
+    mandar = {'nombrecurso':mandar}
+    this.http.post<any>(this.baseUrl+'alumnos/buscar',mandar,{headers}).subscribe(data=>{
+          this.sujetoBuscarRecomendacion.next(data.estudiantes)
+      })
+  }
+  listenerBuscar(){
+    return this.sujetoBuscarRecomendacion.asObservable()
   }
   titulosNombre(){
    

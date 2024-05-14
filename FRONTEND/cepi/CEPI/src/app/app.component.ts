@@ -24,7 +24,6 @@ export class AppComponent {
    }
    
     this.sujeto = this.service.listenerBotones().subscribe(async data=>{
-      console.log("entra")
         var usuario:any = await this.service.claims()
         if(usuario.user_details.tipo=='Admin'){
             this.admin=true;
@@ -60,5 +59,8 @@ export class AppComponent {
  }
  credencial(){
   this.route.navigateByUrl('/credenciales')
+ }
+ conectar(){
+  this.service.conectar();
  }
 }

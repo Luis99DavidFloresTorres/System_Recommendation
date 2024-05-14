@@ -2,7 +2,7 @@ from typing import List
 
 from ..database.db_connect import db
 class Student(db.Model):
-    id = db.Column(db.String, primary_key=True)
+    id= db.Column(db.Integer, primary_key=True, autoincrement=True)
     nombreuniversidad = db.Column(db.String(80), nullable=True)
     area = db.Column(db.String(120), nullable=True)
     nombretitulo = db.Column(db.String(120),  nullable=True)

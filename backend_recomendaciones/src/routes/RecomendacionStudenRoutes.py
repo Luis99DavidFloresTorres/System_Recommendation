@@ -7,10 +7,12 @@ from ..Model.Tipo_Estudiante_Recomendado import Tipo_estudiante_recomendado
 from flask import Blueprint, jsonify, request
 from ..Model.StudentModel import Student
 from datetime import datetime, timedelta
+from dotenv import load_dotenv
+import os
 from flask_jwt_extended import current_user, jwt_required
 import json
 recomendacionStudent = Blueprint('RecomendacionStudent_blueprint', __name__)
-
+load_dotenv()
 
 @recomendacionStudent.route('buscar', methods=['GET'])
 @jwt_required()
@@ -36,13 +38,12 @@ def agregar():
     alumnos = body['alumnos']
     mensaje = body['mensaje']
     celulares=[]
-    print(current_user)
     for i in alumnos:
         celulares.append(i['celular'])
-    response = requests.get('http://localhost:3000/enviarMensaje',
+    response = requests.get(os.getenv('url_sistema_whats')+'enviarMensaje',
                             params={'idusuario': current_user['id'], 'mensaje': mensaje, 'celulares':celulares}, timeout=10)
     estudiantes = [Student(**estudiante_data) for estudiante_data in alumnos]
-    agregarR= Recomendacion(fecha=fecha,mensaje=mensaje, curso=body['curso'])
+    agregarR= Recomendacion(fecha=fecha,mensaje=mensaje, curso=body['curso'],usuario=current_user['usuario'])
     agregarR.save()
-    RecomendacionesStudentServices.guardarEstudiantes(estudiantes,agregarR.id, response)
+    RecomendacionesStudentServices.guardarEstudiantes(estudiantes,agregarR.id, response.json())
     return {'mensaje':1}, 200

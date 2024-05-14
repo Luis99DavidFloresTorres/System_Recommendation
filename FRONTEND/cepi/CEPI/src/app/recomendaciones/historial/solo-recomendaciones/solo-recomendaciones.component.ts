@@ -15,7 +15,7 @@ import { ServiceRecomendacion } from 'src/app/services/Recomendaciones_s.service
   styleUrls: ['./solo-recomendaciones.component.css']
 })
 export class SoloRecomendacionesComponent {
-  displayedColumns= ["fecha","mensaje","curso","botones"];
+  displayedColumns= ["fecha","mensaje","curso","usuario","botones"];
   dataSource = new MatTableDataSource<any>();
   sujeto:Subscription|any;
   @ViewChild(MatSort) sort: MatSort | any;
@@ -46,7 +46,9 @@ export class SoloRecomendacionesComponent {
   mostrar(id:any){
     var dialogRef = this.dialog.open(EstudiantesRecomendacionesComponent, {
       data: {'id':id},
+      height: '700px',
+      width: '800px',
     });
-    dialogRef.close()
+  
   }
 }

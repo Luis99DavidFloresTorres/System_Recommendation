@@ -8,6 +8,7 @@ class Recomendacion(db.Model):
     fecha = db.Column(DateTime)
     mensaje = db.Column(db.String(120))
     curso = db.Column(db.String(120))
+    usuario = db.Column(db.String(120))
     r_student = db.relationship("Student", secondary="recomendacion_student", backref="recomendacion_students")
     t_student = db.relationship("Tipo_estudiante_recomendado", backref="recomendacion", lazy=True)
 

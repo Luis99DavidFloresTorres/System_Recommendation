@@ -1,35 +1,41 @@
+import os
+
 from ..services.RecomendacionesServices import RecomendacionesServices
 from ..services.UsuarioService import UsuarioServices
 from flask import Blueprint, jsonify, request
 from ..Model.TokenBlockList import Token_block_list
 import requests
+from dotenv import load_dotenv
 from flask_jwt_extended import create_access_token, create_refresh_token, get_jwt, jwt_required, current_user
 usuario = Blueprint('Usuario_blueprint', __name__)
-
-@usuario.route('conectar',methods=['POST'])
+load_dotenv()
+@usuario.route('conectar',methods=['GET'])
+@jwt_required()
 def conectar():
-    response = requests.get('http://localhost:3000/conectar',params={'idusuario': current_user['id']}, timeout=10)
+    print(current_user['id'])
+    response = requests.get(os.getenv('url_sistema_whats')+'conectar',params={'id': current_user['id']}, timeout=10)
+    return {'mensaje':'exito'},200
 @usuario.route('login/<usuario>/<contrasena>', methods=['GET'])
 def buscar(usuario, contrasena):
     usuario = UsuarioServices.findUsuario(usuario, contrasena)
+    if usuario==0:
+        return {'mensaje': 'error ingreso'}, 200
+    if usuario==2:
+        return {'mensaje': 'error base de datos'}, 500
     us = Token_block_list.query.filter_by(idU=usuario.idusuario).one_or_none()
-
     if us:
         us.delete()
     access_token = create_access_token(identity=usuario.idusuario)
     refresh_token =create_refresh_token(identity=usuario.idusuario)
-    requests.get('http://localhost:3000/login',
+    requests.get(os.getenv('url_sistema_whats')+'login',
                  params={'idusuario': usuario.idusuario}, timeout=10)
     jsn = jsonify({'tokens':{'access':access_token,
                              'refresh':refresh_token}})
-    if usuario:
-        return jsn,200
-    return {'mensaje':'error base de datos'},500
+    return jsn,200
+
 @usuario.route('claims', methods=['GET'])
 @jwt_required()
 def claims():
-    print('entra')
-    print(current_user)
     serializable_user = {key: value for key, value in current_user.items() if
                          isinstance(value, (int, float, str, list, dict))}
     jsn = jsonify({'user_details': serializable_user})
@@ -78,6 +84,8 @@ def agregar():
     result = UsuarioServices.agregarUsuario(body['usuario'],body['contrasena'],body['tipo'])
     if result==1:
         return {'res':'correcto'},200
+    if result==3:
+        return {'res': 'repetido'}, 200
     return {'res': 'no se pudo guardar'}, 500
 @usuario.route('editarUsuario', methods=['POST'])
 @jwt_required()

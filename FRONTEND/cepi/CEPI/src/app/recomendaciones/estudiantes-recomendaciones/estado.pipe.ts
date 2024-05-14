@@ -6,7 +6,12 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class EstadoPipe implements PipeTransform {
 
   transform(estado: any): string {
-    return estado == 1 ? 'Se envió el mensaje' : 'No se envió el mensaje';
+    
+    if(estado==1){
+      return "Se envió el mensaje"
+    }else{
+      return 'No se envió el mensaje'
+    }
   }
 
 

@@ -17,11 +17,12 @@ class RecomendacionesStudentServices():
             return 0
     @classmethod
     def students(cls, id):
-        recomendacion_est = Recomendacion.query.filter_by(id=id).first()
+        recomendacion = Recomendacion.query.filter_by(id=id).first()
         estudiantes = []
-        for i in recomendacion_est.r_student:
+        for i in recomendacion.r_student:
+            recomendacion_est = Recomendacion_student.query.filter_by(recomendacion_fk=recomendacion.id,student_fk=i.id).first()
             json = {'nombrecompleto':i.nombrecompleto, 'nombreuniversidad':i.nombreuniversidad,
-                    'nombretitulo':i.nombretitulo,'id':i.id,'celular':i.celular,'edad_rango':i.edad_rango}
+                    'nombretitulo':i.nombretitulo,'id':i.id,'celular':i.celular,'edad_rango':i.edad_rango,'estado':recomendacion_est.estado}
             estudiantes.append(json)
         return estudiantes
         #recomendacion_est.save()
@@ -29,6 +30,7 @@ class RecomendacionesStudentServices():
     def guardarEstudiantes(cls, estudiantes, id_recomendacion, noenviados):
         for i in estudiantes:
             if i.celular in noenviados:
+
                 recomendacion_est = Recomendacion_student(student_fk=i.id,recomendacion_fk=id_recomendacion,estado=0)
             else:
                 recomendacion_est = Recomendacion_student(student_fk=i.id, recomendacion_fk=id_recomendacion, estado=1)

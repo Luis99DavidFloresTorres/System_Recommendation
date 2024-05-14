@@ -1,4 +1,4 @@
-<div style="height: 700px; width: 900px">
+<div style="height: 100%; width: 100%">
     <div fxLayoutAlign= "center center" >
         <mat-form-field  color= "primary" fxFlex="30%">
           <input matInput id="input" placeholder="buscador" (keyup)="hacerFiltro($any($event.target).value)">
@@ -14,7 +14,7 @@
             </ng-container>
               <ng-container matColumnDef="botones">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Acciones </th>
-                <td mat-cell *matCellDef="let element"> <button color="primary" mat-raised-button (click)="elegir(element.nombretitulo)"><mat-icon>add</mat-icon></button>
+                <td mat-cell *matCellDef="let element"> <button color="primary" mat-raised-button (click)="elegir(element.nombretitulo)"><div ><mat-icon style="margin-top: 3px; ">add</mat-icon><h3 fxFlex style="margin-top: 2px;">Seleccionar</h3></div></button>
                 </td>
               </ng-container>
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

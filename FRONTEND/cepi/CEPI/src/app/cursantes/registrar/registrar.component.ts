@@ -53,7 +53,8 @@ export class RegistrarComponent {
     this.service.id=-1
   }
   titulos(){
-    var dialog = this.matDialog.open(DialogComponent,{})
+    var dialog = this.matDialog.open(DialogComponent,{height: '700px',
+    width: '800px',})
     dialog.afterClosed().pipe(
       takeUntil(this.unsubscribe)
     ).subscribe(result => {
@@ -63,7 +64,6 @@ export class RegistrarComponent {
   }
   
   registrar(){
-    var id=this.formGroup.get('id').value
     var nombre=this.formGroup.get('nombre').value
     var universidad=this.formGroup.get('universidad').value
     var edad=this.formGroup.get('edad').value
@@ -71,10 +71,11 @@ export class RegistrarComponent {
     var tituloR=this.formGroup.get('titulacion').value
     var titulo = this.formGroup.get('titulo').value
     var celular = this.formGroup.get('celular').value
-    var cursante:cursante ={'id':id,'nombrecompleto':nombre,'nombretitulo':titulo,'nombreuniversidad':universidad,'celular':celular,'area':area,'edad_rango':edad,'rango_ano_titulacion':tituloR}
     if(this.service.id!=undefined && this.service.id>=0){
+      var cursante:cursante ={'id':this.service.id,'nombrecompleto':nombre,'nombretitulo':titulo,'nombreuniversidad':universidad,'celular':celular,'area':area,'edad_rango':edad,'rango_ano_titulacion':tituloR}
       this.service.editar(cursante)
     }else{
+      var cursante:cursante ={'id':undefined,'nombrecompleto':nombre,'nombretitulo':titulo,'nombreuniversidad':universidad,'celular':celular,'area':area,'edad_rango':edad,'rango_ano_titulacion':tituloR}
       this.service.agregar(cursante);
     }
   }

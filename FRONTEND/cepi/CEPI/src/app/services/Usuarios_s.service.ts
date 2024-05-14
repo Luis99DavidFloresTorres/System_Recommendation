@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
+import { Router } from "@angular/router";
 import { Subject } from "rxjs";
 import { environment } from "src/environments/environment";
 @Injectable({
@@ -13,11 +14,13 @@ export class ServiceUsuario{
   sujetoBotones= new Subject<any>();
   sujetoById = new Subject<any>();
   id:any;
-  constructor(private http:HttpClient){
+  constructor(private http:HttpClient, private route:Router){
   }
   login(usuario:any,contrasena:any){
     this.http.get<any>(this.baseUrl+'usuario/login/'+usuario+'/'+contrasena).subscribe(data=>{
-            if(data.mensaje=='error base de datos'){
+            if(data.mensaje=='error ingreso'){
+                alert('Ingrese correctamente el usuario y contraseña')
+            }else if(data.mensaje=='error base de datos'){
                 alert('Usuario no registrado')
             }else{
                 localStorage.setItem('access',data.tokens.access)
@@ -27,6 +30,15 @@ export class ServiceUsuario{
            
     })
 
+  }
+  conectar(){
+    var jwt = localStorage.getItem('access')
+    var headers = new HttpHeaders();
+    headers = headers.set('Content-Type', 'application/json');
+    headers = headers.set('Authorization', `Bearer ${jwt}`);
+    this.http.get<any>(this.baseUrl+'usuario/conectar',{headers}).subscribe(data=>{
+        console.log(data)
+    })
   }
   estadoUsuario(){
     var jwt = localStorage.getItem('access')
@@ -46,6 +58,7 @@ export class ServiceUsuario{
     this.http.get<any>(this.baseUrl+'usuario/out', {headers}).subscribe(data=>{
            localStorage.removeItem('access');
            location.reload()
+           this.route.navigateByUrl('/')
     })
 
   }
@@ -68,9 +81,8 @@ export class ServiceUsuario{
             alert('Se guardó con éxito')
             location.reload()
         }
-        if(data.res=='id repetido'){
-            alert('El id es repetido')
-            location.reload();
+        if(data.res=='repetido'){
+            alert('Cambie el nombre de usuario, contraseña o tipo')
         }
         if(data.res=='no se pudo guardar'){
             alert('No se pudo guardar')

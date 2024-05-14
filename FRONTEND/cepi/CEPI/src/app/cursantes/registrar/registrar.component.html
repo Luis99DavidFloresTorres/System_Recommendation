@@ -7,11 +7,6 @@
       <mat-card-content>
           <form fxLayoutAlign="center center" [formGroup]="formGroup" fxLayout="column">
                 <mat-form-field style="width: 90%;">
-                  <mat-label>3971408</mat-label>
-                  <input  formControlName="id" matInput>
-                  <mat-hint>Id</mat-hint>
-                </mat-form-field>
-                <mat-form-field style="width: 90%;">
                     <mat-label>Nombre del cursante</mat-label>
                     <input  formControlName="nombre" matInput>
                     <mat-hint>Nombre</mat-hint>
@@ -33,7 +28,7 @@
                         <input   formControlName="titulo" matInput>
                         <mat-hint>Nombre del Titulo académico</mat-hint>
                       </mat-form-field>
-                      <button style="margin-top: 3%; margin-left:4%"  mat-raised-button color="primary" (click)="titulos()"><mat-icon>add</mat-icon></button>
+                      <button style="margin-top: 3%; margin-left:4%"  mat-raised-button color="primary" (click)="titulos()"><div ><mat-icon style="margin-top: 9px; ">add</mat-icon><h3 fxFlex style="margin-top: 7px;">Titulo</h3></div></button>
                   </div>
                   <mat-form-field style="width: 90%;">
                     <mat-label>Celular</mat-label>
