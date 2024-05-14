@@ -25,9 +25,9 @@ generation_config.max_new_tokens=100
 generation_config.pad_token_id=tokenizer.eos_token_id
 generation_config.eos_token_id=tokenizer.eos_token_id
 generation_config.num_return_sequence=1
-generation_config.top_p=0.1 # de acuerdo a las probabilidades de las palabras, mientras mas bajo menos incoherente
-#generation_config.top_k= 7 # escoge las 7 mas probables palabras
-generation_config.temperature=0.1
+generation_config.top_p=0.6 # de acuerdo a las probabilidades de las palabras, mientras mas bajo menos incoherente
+generation_config.top_k= 5 # escoge las 7 mas probables palabras
+generation_config.temperature=0.7
 generation_config.do_sample=True
 
 def init_app():
