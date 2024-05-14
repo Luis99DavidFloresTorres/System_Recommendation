@@ -2,10 +2,13 @@ from ..services.RecomendacionesServices import RecomendacionesServices
 from ..services.UsuarioService import UsuarioServices
 from flask import Blueprint, jsonify, request
 from ..Model.TokenBlockList import Token_block_list
+import requests
 from flask_jwt_extended import create_access_token, create_refresh_token, get_jwt, jwt_required, current_user
 usuario = Blueprint('Usuario_blueprint', __name__)
 
-
+@usuario.route('conectar',methods=['POST'])
+def conectar():
+    response = requests.get('http://localhost:3000/conectar',params={'idusuario': current_user['id']}, timeout=10)
 @usuario.route('login/<usuario>/<contrasena>', methods=['GET'])
 def buscar(usuario, contrasena):
     usuario = UsuarioServices.findUsuario(usuario, contrasena)
@@ -15,6 +18,8 @@ def buscar(usuario, contrasena):
         us.delete()
     access_token = create_access_token(identity=usuario.idusuario)
     refresh_token =create_refresh_token(identity=usuario.idusuario)
+    requests.get('http://localhost:3000/login',
+                 params={'idusuario': usuario.idusuario}, timeout=10)
     jsn = jsonify({'tokens':{'access':access_token,
                              'refresh':refresh_token}})
     if usuario:
@@ -46,25 +51,28 @@ def estadoUser():
     return jsn, 200
 
 @usuario.route('buscarTodos', methods=['GET'])
-#@jwt_required()
+@jwt_required()
 def buscarTodos():
     listaEstudiantes= UsuarioServices.obtenerTodos()
     #StudentServices.getStudentsRecommendation(body)
     jsn = jsonify({'usuarios': listaEstudiantes})
     return jsn, 200
 @usuario.route('findById/<id>', methods=['GET'])
+@jwt_required()
 def findById(id):
     estudiante = UsuarioServices.getById(id)
     jsn = jsonify({'usuario':estudiante})
     return jsn, 200
 
 @usuario.route('eliminarUsuario/<id>', methods=['POST'])
+@jwt_required()
 def eliminar(id):
     result = UsuarioServices.eliminarEstudiante(id)
     if result == 1:
         return {'res': 'correcto'}, 200
     return {'res': 'no se pudo eliminar'}, 500
 @usuario.route('guardarUsuario', methods=['POST'])
+@jwt_required()
 def agregar():
     body = request.json
     result = UsuarioServices.agregarUsuario(body['usuario'],body['contrasena'],body['tipo'])
@@ -72,6 +80,7 @@ def agregar():
         return {'res':'correcto'},200
     return {'res': 'no se pudo guardar'}, 500
 @usuario.route('editarUsuario', methods=['POST'])
+@jwt_required()
 def editar():
     body = request.json
     idE,usuario,contrasena,tipo=atributes_json(body)

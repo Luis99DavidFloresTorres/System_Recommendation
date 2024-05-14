@@ -15,10 +15,10 @@ from sqlalchemy import create_engine
 app = Flask(__name__)
 cors = CORS(app)
 jwt = JWTManager()
-#tokenizer = AutoTokenizer.from_pretrained("DeepESP/gpt2-spanish-medium")
+tokenizer = AutoTokenizer.from_pretrained("DeepESP/gpt2-spanish-medium")
 #model = AutoModelForCausalLM.from_pretrained("src/gpt2_sin_cursos_ensenanza")
 #model = AutoModelForCausalLM.from_pretrained("src/gpt2_con_cursos_ensenanza")
-'''tokenizer = AutoTokenizer.from_pretrained("LuisDavidFT777/gpt2-spanish-medium")
+#tokenizer = AutoTokenizer.from_pretrained("LuisDavidFT777/gpt2-spanish-medium")
 model = AutoModelForCausalLM.from_pretrained("LuisDavidFT777/gpt2-spanish-medium")
 generation_config = model.generation_config
 generation_config.max_new_tokens=100
@@ -28,7 +28,7 @@ generation_config.num_return_sequence=1
 generation_config.top_p=0.1 # de acuerdo a las probabilidades de las palabras, mientras mas bajo menos incoherente
 #generation_config.top_k= 7 # escoge las 7 mas probables palabras
 generation_config.temperature=0.1
-generation_config.do_sample=True'''
+generation_config.do_sample=True
 
 def init_app():
     #app.config.from_object(config)

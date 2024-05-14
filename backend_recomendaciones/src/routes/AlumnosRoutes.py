@@ -1,11 +1,13 @@
 from flask import Blueprint, jsonify, request
 from ..services.StudentServices import StudentServices
 from flask_jwt_extended import jwt_required
+
 from ..services.AI_LLM import AI_LLM_Services
 main = Blueprint('alumnos_blueprint', __name__)
 
 
 @main.route('buscar', methods=['POST'])
+@jwt_required()
 def buscar():
     body = request.json
     print(body)
@@ -21,11 +23,13 @@ def buscarTodos():
     jsn = jsonify({'estudiantes': listaEstudiantes})
     return jsn, 200
 @main.route('findById/<id>', methods=['GET'])
+@jwt_required()
 def findById(id):
     estudiante = StudentServices.getById(id)
     jsn = jsonify({'estudiante':estudiante})
     return jsn, 200
 @main.route('guardarEstudiante', methods=['POST'])
+@jwt_required()
 def agregar():
     body = request.json
     print(request.json)
@@ -39,6 +43,7 @@ def agregar():
         return {'res':'id repetido'},200
     return {'res': 'no se pudo guardar'}, 500
 @main.route('editarEstudiante', methods=['POST'])
+@jwt_required()
 def editar():
     body = request.json
     idE,nombreU,area,titulo,nombreC,celular,edadR,titulacionR=atributes_json(body)
@@ -47,6 +52,7 @@ def editar():
         return {'res':'correcto'},200
     return {'res': 'no se pudo guardar'}, 500
 @main.route('eliminarEstudiante/<id>', methods=['POST'])
+@jwt_required()
 def eliminar(id):
     result = StudentServices.eliminarEstudiante(id)
     if result == 1:

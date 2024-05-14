@@ -26,7 +26,10 @@ class RecomendacionesStudentServices():
         return estudiantes
         #recomendacion_est.save()
     @classmethod
-    def guardarEstudiantes(cls, estudiantes, id_recomendacion):
+    def guardarEstudiantes(cls, estudiantes, id_recomendacion, noenviados):
         for i in estudiantes:
-            recomendacion_est = Recomendacion_student(student_fk=i.id,recomendacion_fk=id_recomendacion)
+            if i.celular in noenviados:
+                recomendacion_est = Recomendacion_student(student_fk=i.id,recomendacion_fk=id_recomendacion,estado=0)
+            else:
+                recomendacion_est = Recomendacion_student(student_fk=i.id, recomendacion_fk=id_recomendacion, estado=1)
             recomendacion_est.save()

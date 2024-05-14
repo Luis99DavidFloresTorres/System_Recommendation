@@ -2,9 +2,9 @@ from ..Model.StudentModel import Student
 from ..database.db_connect import db
 class StudentServices():
     @classmethod
-    def getStudentsRecommendation(cls, titulo, area, universidad, rango_ano_titulacion, rango_edad):
+    def getStudentsRecommendation(cls, titulo, area, rango_ano_titulacion, rango_edad):
         try:
-            con = Student.query.filter_by(nombretitulo=titulo, area=area, nombreuniversidad=universidad,rango_ano_titulacion=rango_ano_titulacion,edad_rango=rango_edad)
+            con = Student.query.filter_by(nombretitulo=titulo, area=area,rango_ano_titulacion=rango_ano_titulacion,edad_rango=rango_edad)
             list = []
             print("entra")
 

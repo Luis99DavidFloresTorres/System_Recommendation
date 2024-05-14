@@ -18,16 +18,16 @@ class AI_LLM_Services():
         tipo_alumno = cls.tipo_estudiante_recomendado2(respuesta.split())
         titulo = " ".join(tipo_alumno['titulo'])
         area = " ".join(tipo_alumno['area'])
-        universidad = " ".join(tipo_alumno['universidad'])
+        #universidad = " ".join(tipo_alumno['universidad'])
         rango_titulacion = " ".join(tipo_alumno['rango_ano_titulacion'])
         rango_edad=" ".join(tipo_alumno['rango_edad'])
         tipo_alumno['titulo'] = titulo
         tipo_alumno['area'] = area
-        tipo_alumno['universidad'] = universidad
+        #tipo_alumno['universidad'] = universidad
         tipo_alumno['rango_ano_titulacion'] = rango_titulacion
         tipo_alumno['rango_edad'] = rango_edad
         print(tipo_alumno)
-        listEstudiantes = StudentServices.getStudentsRecommendation(titulo, area, universidad,rango_titulacion, rango_edad)
+        listEstudiantes = StudentServices.getStudentsRecommendation(titulo, area,rango_titulacion, rango_edad)
         return listEstudiantes, tipo_alumno
 
     def tipo_estudiante_recomendado(palabraV):
@@ -53,7 +53,7 @@ class AI_LLM_Services():
 
     def tipo_estudiante_recomendado2(palabraV):
         i = 0
-        alumno = {'titulo': 0, 'area': 0, 'universidad': 0, 'rango_ano_titulacion': 0, 'rango_edad': 0}
+        alumno = {'titulo': 0, 'area': 0, 'rango_ano_titulacion': 0, 'rango_edad': 0}
         keys = list(alumno.keys())
         idxK = -1
         idxS = 0
@@ -62,19 +62,21 @@ class AI_LLM_Services():
         etiqueta = keys[0]
         while i < len(palabraV):
             palabra = palabraV[i]
-            if flagEtiqueta and palabra[0] == '<':
+            if flagEtiqueta and palabra[0:2] == '</':
                 countEtiqueta = countEtiqueta + 1
                 idxK = idxK + 1
-                etiqueta = keys[idxK]
+                if idxK < len(keys):
+                    etiqueta = keys[idxK]
             if countEtiqueta == 1:
                 alumno[etiqueta] = palabraV[idxS:i]
-                idxS = i + 1
+                idxS = i+2
                 countEtiqueta = 0
-                if palabra == '<final>':
-                    alumno[keys[-1]] = palabraV[i + 1:i + 2]
+                if palabra == '</rango_edad>':
+                    alumno[keys[-1]] = palabraV[i-1:i]
                     break
             if palabra == '<titulo>':
                 idxS = i + 1
                 flagEtiqueta = True
             i = i + 1
+        print(alumno)
         return alumno
