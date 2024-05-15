@@ -4,7 +4,7 @@ from ..database.db_connect import db
 
 class Token_block_list(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    idU = db.Column(db.String(), nullable=False)
+    idU = db.Column(db.String(300), nullable=False)
     created_at = db.Column(db.DateTime(), default=datetime.datetime.utcnow)
     def save(self):
         db.session.add(self)

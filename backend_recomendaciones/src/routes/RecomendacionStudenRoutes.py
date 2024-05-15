@@ -3,7 +3,6 @@ import requests
 from ..services.RecomendacionStudent import RecomendacionesStudentServices
 from ..services.AI_LLM import AI_LLM_Services
 from ..Model.RecomendacionModel import Recomendacion
-from ..Model.Tipo_Estudiante_Recomendado import Tipo_estudiante_recomendado
 from flask import Blueprint, jsonify, request
 from ..Model.StudentModel import Student
 from datetime import datetime, timedelta

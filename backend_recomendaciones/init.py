@@ -1,3 +1,5 @@
+import os
+
 from flask_cors import CORS
 from flask import Flask, jsonify
 from src.routes.AlumnosRoutes import main
@@ -12,6 +14,7 @@ from transformers import AutoTokenizer, AutoModelForCausalLM
 from flask_jwt_extended import JWTManager
 from datetime import timedelta
 from sqlalchemy import create_engine
+import os
 app = Flask(__name__)
 cors = CORS(app)
 jwt = JWTManager()
@@ -37,13 +40,15 @@ def init_app():
     app.register_blueprint(recomendacion, url_prefix='/recomendacion/')
     app.register_blueprint(recomendacionStudent, url_prefix='/recomendacionStudent/')
     app.register_blueprint(usuario, url_prefix='/usuario/')
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:root@localhost/whatss_students'
+    app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("url_base_datos")
     # Desactiva la señalización de cambios de la base de datos
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     app.config["JWT_ALGORITHM"] = "HS256"
     app.config['SECRET_KEY'] = 'caac3c307a8dc042c4518d91'
     app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(days=1600)
     db.init_app(app)
+    with app.app_context():
+        db.create_all()
     jwt.init_app(app)
     @jwt.user_lookup_loader
     def user_lookup_loader(jwt_header,jwt_data):
