@@ -3,6 +3,7 @@ const { Client, LocalAuth } = require('whatsapp-web.js');
 const app = express();
 const PORT = process.env.PORT || 3000;
 var clientes = {}
+var path='E:/Sistema recomendacion/System_Recommendation/whatsapp/.wwebjs_auth/session-cliente_'
 async function enviarMensajeDesdeCliente(idCliente, numeroDestino, mensaje) {
     try {
         var cliente = clientes[idCliente];
@@ -14,8 +15,11 @@ async function enviarMensajeDesdeCliente(idCliente, numeroDestino, mensaje) {
         return false; 
     }
 }
+
 app.get('/conectar',async(req,res)=>{
     res.sendStatus(200)
+    console.log(req.query.id)
+   
     var cliente = new Client({
         puppeteer: {
             headless: false
@@ -40,6 +44,10 @@ app.get('/conectar',async(req,res)=>{
     clientes[req.query.id]=cliente
 
 })
+app.get('/' , async(req, res) => {
+    res.send({'hola':'hola'},status=200);
+}
+)
 app.get('/login', async (req, res) => {
     idUsuario = req.query.idusuario;
     res.sendStatus(200)

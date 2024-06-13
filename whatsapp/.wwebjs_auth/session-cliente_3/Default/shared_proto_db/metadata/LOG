@@ -1,2 +1,3 @@
-2024/05/14-08:08:38.957 2484 Creating DB E:\Sistema recomendacion\System_Recommendation\whatsapp\.wwebjs_auth\session-cliente_3\Default\shared_proto_db\metadata since it was missing.
-2024/05/14-08:08:39.058 2484 Reusing MANIFEST E:\Sistema recomendacion\System_Recommendation\whatsapp\.wwebjs_auth\session-cliente_3\Default\shared_proto_db\metadata/MANIFEST-000001
+2024/05/26-09:41:32.737 49d4 Reusing MANIFEST E:\Sistema recomendacion\System_Recommendation\whatsapp\.wwebjs_auth\session-cliente_3\Default\shared_proto_db\metadata/MANIFEST-000001
+2024/05/26-09:41:32.756 49d4 Recovering log #3
+2024/05/26-09:41:32.757 49d4 Reusing old log E:\Sistema recomendacion\System_Recommendation\whatsapp\.wwebjs_auth\session-cliente_3\Default\shared_proto_db\metadata/000003.log 

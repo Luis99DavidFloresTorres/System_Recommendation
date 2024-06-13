@@ -14,7 +14,7 @@ import { SoloRecomendacionesComponent } from '../solo-recomendaciones/solo-recom
   styleUrls: ['./estudiantes-recomendaciones.component.css']
 })
 export class EstudiantesRecomendacionesComponent {
-  displayedColumns= ['nombrecompleto','celular','nombretitulo',"edad_rango","estado","botones"];
+  displayedColumns= ['nombrecompleto','celular','nombretitulo',"edad_rango","estado"];
   dataSource = new MatTableDataSource<any>();
   sujeto:Subscription|any;
   @ViewChild(MatSort) sort: MatSort | any;

@@ -22,16 +22,16 @@ import {MatChipsModule} from '@angular/material/chips';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {MatTreeModule} from '@angular/material/tree';
 import {MatRadioModule} from '@angular/material/radio';
-
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner'; 
 
 @NgModule({
   imports:[MatSidenavModule,MatButtonModule, MatListModule,MatIconModule,MatToolbarModule,FormsModule,MatFormFieldModule
     ,MatInputModule,MatTableModule, MatNativeDateModule, MatDatepickerModule, MatDialogModule,MatSelectModule,MatMenuModule
     ,MatPaginatorModule,MatCardModule, MatSortModule, MatCheckboxModule, MatAutocompleteModule, MatStepperModule, MatChipsModule, MatTreeModule,
-     MatRadioModule],
+     MatRadioModule, MatProgressSpinnerModule],
   exports:[MatSidenavModule,MatButtonModule, MatListModule,MatIconModule,MatToolbarModule,FormsModule,MatFormFieldModule
     ,MatInputModule,MatTableModule, MatDatepickerModule,MatDialogModule,MatSelectModule,MatMenuModule,MatPaginatorModule
-    ,MatCardModule, MatSortModule, MatCheckboxModule, MatAutocompleteModule, MatStepperModule, MatChipsModule, MatTreeModule, MatRadioModule],
+    ,MatCardModule, MatSortModule, MatCheckboxModule, MatAutocompleteModule, MatStepperModule, MatChipsModule, MatTreeModule, MatRadioModule, MatProgressSpinnerModule],
 })
 export class MaterialModule{
 }

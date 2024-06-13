@@ -6,6 +6,9 @@ from flask import Blueprint, jsonify, request
 from ..Model.TokenBlockList import Token_block_list
 import requests
 from dotenv import load_dotenv
+import pandas as pd
+import json
+from ..Model.StudentModel import Student
 from flask_jwt_extended import create_access_token, create_refresh_token, get_jwt, jwt_required, current_user
 usuario = Blueprint('Usuario_blueprint', __name__)
 load_dotenv()
@@ -13,8 +16,19 @@ load_dotenv()
 @jwt_required()
 def conectar():
     print(current_user['id'])
-    response = requests.get(os.getenv('url_sistema_whats')+'conectar',params={'id': current_user['id']}, timeout=10)
+    response = requests.get(os.getenv('url_sistema_whats')+'conectar',params={'id': current_user['id']}, timeout=130)
     return {'mensaje':'exito'},200
+@usuario.route('prueba',methods=['GET'])
+def prueba():
+    url = 'https://recomendaciones-cursos.cepi.bo/backend/alumnos/guardarEstudiante'
+    json2 = pd.read_json('src/routes/estudiantes2.json')
+    headers = {'Content-Type': 'application/json'}
+
+    for i in range(121,len(json2)):
+        estudiante = json2.iloc[i]
+        dict = estudiante.to_dict()
+        response = requests.post(url, json=dict, headers=headers, timeout=300)
+    return{'mensaje':'prueba'},200
 @usuario.route('login/<usuario>/<contrasena>', methods=['GET'])
 def buscar(usuario, contrasena):
     usuario = UsuarioServices.findUsuario(usuario, contrasena)

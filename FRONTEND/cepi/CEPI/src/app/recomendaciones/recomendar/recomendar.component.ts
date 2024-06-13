@@ -18,6 +18,8 @@ export class RecomendarComponent {
   sujeto:Subscription|any;
   nombre = new FormControl('');
   mensaje = new FormControl('');
+  estadoBuscar = false;
+
   displayedColumns=['nombrecompleto','celular','area','nombretitulo','nombreuniversidad','rango_ano_titulacion','edad_rango','accion']
   @ViewChild(MatSort) sort: MatSort | any;
   @ViewChild(MatPaginator) pag: MatPaginator|any;
@@ -37,12 +39,19 @@ export class RecomendarComponent {
     }
   }
   buscar(){
+    
     this.service.buscar(this.nombre.value)
     if(this.sujeto!= undefined){
       this.sujeto.unsubscribe();
     }
+    this.dataSource.data = []
+    this.estadoBuscar = true
     this.sujeto=  this.service.listenerBuscar().subscribe(data=>{
+      
         this.dataSource.data=data
+        console.log('.............')
+        console.log(this.dataSource.data)
+        this.estadoBuscar=false
     })
   }
   enviar(){

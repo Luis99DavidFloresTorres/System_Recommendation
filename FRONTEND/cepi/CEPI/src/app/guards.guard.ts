@@ -8,13 +8,14 @@ export const guardsGuard: CanActivateFn =async (route, state) => {
   var router = inject(Router)
   if(localStorage.getItem('access')!=undefined){
     var usuario:any = await service.claims()
+    //console.log('----',usuario)
   }else{
     alert('No tienes permisos para entrar')
     router.navigateByUrl('/')
       return false
   }
   var nivelUsuario = usuario.user_details.tipo
-  if(state.url=='mostrarUsuario' || state.url=='guardarUsuario'){
+  if(state.url=='/usuariosMostrar' || state.url=='/usuariosRegistrar'){
     if(nivelUsuario=='Admin'){
       return true
     }else{
