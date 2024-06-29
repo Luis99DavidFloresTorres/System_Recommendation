@@ -1,0 +1,58 @@
+<div fxLayoutAlign="center center">
+   
+      <button mat-raised-button><input  type="file" (change)="onFileChange($event)" accept=".xlsx, .xls" /></button>
+    
+  </div>
+  <div >
+   <mat-label fxLayoutAlign="center center"><h1>Valores obligatorios</h1></mat-label> 
+   <mat-label><h2>Area:&nbsp;&nbsp;tecnológicas,&nbsp;&nbsp;humanidades y sociales,&nbsp;&nbsp;ciencias de la salud,&nbsp;&nbsp;ciencias económicas,&nbsp;&nbsp;ciencias agrarias</h2></mat-label> 
+   <mat-label><h2 >Rango de edad: &nbsp;&nbsp;menor-32,&nbsp;&nbsp; 33-39, &nbsp;&nbsp;40-46, &nbsp;&nbsp;47-mayor </h2></mat-label> 
+   <mat-label><h2>Rango del año de titulación:&nbsp;&nbsp;antiguo,&nbsp;&nbsp;2010-2016,&nbsp;&nbsp;2017-actual</h2></mat-label>
+   <mat-label><h2>Nombre del titulo:&nbsp;&nbsp;Presionar el botón titulo</h2></mat-label> 
+  </div>
+  <div >
+    <table mat-table [dataSource]="dataSource" matSort >
+
+      
+        <ng-container matColumnDef="nombreuniversidad">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Universidad </th>
+          <td mat-cell *matCellDef="let element"> {{element.nombreuniversidad}} </td>
+        </ng-container>
+      
+
+        <ng-container matColumnDef="nombrecompleto">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </th>
+          <td mat-cell *matCellDef="let element"> {{element.nombrecompleto}} </td>
+        </ng-container>
+        <ng-container matColumnDef="area">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Area </th>
+          <td mat-cell *matCellDef="let element"> {{element.area}} </td>
+        </ng-container>
+      
+        <ng-container matColumnDef="nombretitulo">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> <button mat-raised-button (click)="buscarTitulo()">Titulo</button> </th>
+          <td mat-cell *matCellDef="let element"> {{element.nombretitulo}} </td>
+        </ng-container>
+      
+
+        <ng-container matColumnDef="edad_rango">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Rango de Edad </th>
+          <td mat-cell *matCellDef="let element"> {{element.edad_rango}} </td>
+        </ng-container>
+        
+        <ng-container matColumnDef="rango_ano_titulacion">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Titulacion </th>
+            <td mat-cell *matCellDef="let element"> {{element.rango_ano_titulacion}} </td>
+          </ng-container>
+          <ng-container matColumnDef="celular">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Celular </th>
+            <td mat-cell *matCellDef="let element"> {{element.celular}} </td>
+          </ng-container>  
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+      
+</div>
+<mat-paginator  [pageSizeOptions]="[5,10,20,50,100]">
+</mat-paginator>
+<div fxLayoutAlign="center center"><button mat-raised-button color="primary" (click)="guardar()">Guardar</button></div>

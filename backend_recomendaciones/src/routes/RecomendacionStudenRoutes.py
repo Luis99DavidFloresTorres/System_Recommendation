@@ -12,7 +12,22 @@ from flask_jwt_extended import current_user, jwt_required
 import json
 recomendacionStudent = Blueprint('RecomendacionStudent_blueprint', __name__)
 load_dotenv()
-
+@recomendacionStudent.route('repetir',methods=['POST'])
+@jwt_required()
+def repetir():
+    body = request.json
+    alumnos = body['alumnos']
+    mensaje = body['mensaje']
+    tiempo = body['tiempo']
+    repetidor = body['repetidor']
+    celulares=[]
+    for i in alumnos:
+        celulares.append(i['celular'])
+    response = requests.get(os.getenv('url_sistema_whats')+'repetir',params={'idusuario': current_user['id'],
+                                                                             'mensaje': mensaje,
+                                                                             'celulares':celulares,'tiempo':tiempo,
+                                                                             'repetidor':repetidor}, timeout=130)
+    return {'mensaje':'exito'},200
 @recomendacionStudent.route('buscar', methods=['GET'])
 @jwt_required()
 def buscar():

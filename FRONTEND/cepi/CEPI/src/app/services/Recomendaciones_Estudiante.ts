@@ -35,6 +35,18 @@ export class ServiceRecomendacionEstudiante{
             }
     })
   }
+  repetirMensaje(enviar:any){
+    var jwt = localStorage.getItem('access')
+    var headers = new HttpHeaders();
+    headers = headers.set('Content-Type', 'application/json');
+    headers = headers.set('Authorization', `Bearer ${jwt}`);
+    this.http.post<any>(this.baseUrl+'recomendacionStudent/repetir',enviar,{headers}).subscribe(data=>{
+            if(data.mensaje==1){
+                alert("Mensaje enviado con éxito!")
+                location.reload()
+            }
+    })
+  }
   mostrarRecomendaciones(){
     var jwt = localStorage.getItem('access')
     var headers = new HttpHeaders();

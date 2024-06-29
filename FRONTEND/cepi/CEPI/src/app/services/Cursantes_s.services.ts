@@ -20,7 +20,7 @@ export class ServiceCursante{
   agregar(mandar:any){
     var jwt = localStorage.getItem('access')
     var headers = new HttpHeaders();
-    headers = headers.set('Content-Type', 'application/json');
+    headers = headers.set('Content-Type+', 'application/json');
     headers = headers.set('Authorization', `Bearer ${jwt}`);
     this.http.post<any>(this.baseUrl+'alumnos/guardarEstudiante',mandar, {headers}).subscribe(data=>{
      
@@ -31,6 +31,21 @@ export class ServiceCursante{
         if(data.res=='id repetido'){
             alert('El id es repetido')
             location.reload();
+        }
+        if(data.res=='no se pudo guardar'){
+            alert('No se pudo guardar')
+        }
+    })
+  }
+  agregarAlumnos(mandar:any){
+    var jwt = localStorage.getItem('access')
+    var headers = new HttpHeaders();
+    headers = headers.set('Content-Type', 'application/json');
+    headers = headers.set('Authorization', `Bearer ${jwt}`);
+    this.http.post<any>(this.baseUrl+'alumnos/guardarEstudiantes',mandar, {headers}).subscribe(data=>{
+        if(data.res=='correcto'){
+            alert('Se guardó con éxito')
+            location.reload()
         }
         if(data.res=='no se pudo guardar'){
             alert('No se pudo guardar')

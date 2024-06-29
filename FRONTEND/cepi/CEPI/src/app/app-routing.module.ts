@@ -10,6 +10,7 @@ import { RegistrarUComponent } from './usuarios/registrar-u/registrar-u.componen
 import { RegistrarComponent } from './cursantes/registrar/registrar.component';
 import { CredencialesComponent } from './usuarios/credenciales/credenciales.component';
 import { RecomendarComponent } from './recomendaciones/recomendar/recomendar.component';
+import { IngresarExcelComponent } from './ingresar-excel/ingresar-excel.component';
 
 const routes: Routes = [{ path:'', component: LoginComponent},
 { path:'cursantesMostrar', component: MostrarComponent, canActivate:[guardsGuard]},
@@ -18,7 +19,9 @@ const routes: Routes = [{ path:'', component: LoginComponent},
 { path:'cursantesRegistrar', component: RegistrarComponent, canActivate:[guardsGuard]},
 { path:'historial', component: SoloRecomendacionesComponent, canActivate:[guardsGuard]},
 { path:'credenciales', component: CredencialesComponent, canActivate:[guardsGuard]},
-{ path:'recomendar', component: RecomendarComponent, canActivate:[guardsGuard]}
+{ path:'recomendar', component: RecomendarComponent, canActivate:[guardsGuard]},
+{ path:'excel', component: IngresarExcelComponent, canActivate:[guardsGuard]},
+{ path:'registrar', component: RegistrarComponent},
   
 ];
 

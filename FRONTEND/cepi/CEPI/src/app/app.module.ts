@@ -22,6 +22,9 @@ import { registerLocaleData } from '@angular/common';
 import localEs from '@angular/common/locales/es'
 import { RegistrarComponent } from './cursantes/registrar/registrar.component';
 import { CredencialesComponent } from './usuarios/credenciales/credenciales.component';
+import { IngresarExcelComponent } from './ingresar-excel/ingresar-excel.component';
+import { TitulosDialogComponent } from './ingresar-excel/titulos-dialog/titulos-dialog.component';
+
 registerLocaleData(localEs,'es')
 @NgModule({
   declarations: [
@@ -36,7 +39,9 @@ registerLocaleData(localEs,'es')
     RegistrarComponent,
     DialogComponent,
     EstadoPipe,
-    CredencialesComponent
+    CredencialesComponent,
+    IngresarExcelComponent,
+    TitulosDialogComponent
   ],
   imports: [
     BrowserModule,

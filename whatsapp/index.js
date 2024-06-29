@@ -1,9 +1,86 @@
 const express = require('express');
 const { Client, LocalAuth } = require('whatsapp-web.js');
 const app = express();
+const fs = require('fs');
+const path = require('path');
 const PORT = process.env.PORT || 3000;
 var clientes = {}
-var path='E:/Sistema recomendacion/System_Recommendation/whatsapp/.wwebjs_auth/session-cliente_'
+const configPath = 'mensajesEnviar.json'
+
+const configInicial = {
+    tareas: []
+};
+
+fs.writeFileSync(configPath, JSON.stringify(configInicial, null, 2))
+async function revisarSincronizacion(){
+    var sincronizaciones = await leerSyncronizador();
+    var horaMilisegundos = Date.now();
+    for(var i=0;i<sincronizaciones.length;i++){
+        var horaS = sincronizaciones[i].milisegundos
+        var repetidor = sincronizaciones[i].repetidor
+        var minutos = sincronizaciones[i].minutos
+        var estudiantes= sincronizaciones[i].estudiantes
+        var mensaje= sincronizaciones[i].mensaje
+        var idusuario= sincronizaciones[i].idusuario
+        if(horaMilisegundos>horaS){
+            if(repetidor==1){
+                sincronizaciones[i].milisegundos =horaMilisegundos+ (minutos*60*1000)
+                sincronizaciones.splice(i, 1)
+            }else{
+                sincronizaciones[i].milisegundos =horaMilisegundos+ (minutos*60*1000)
+                sincronizaciones[i].repetidor = repetidor-1;
+            }
+            for(var j = 0 ;j<estudiantes.length;j++){
+                var celular = estudiantes[j]+"@c.us"
+                if(estudiantes[j].length==8){
+                    celular='591'+celular
+                }
+                var estado = await enviarMensajeDesdeCliente(idusuario, celular, mensaje);
+                console.log(estado)
+            }
+        }
+    }
+    fs.writeFileSync(configPath, JSON.stringify(sincronizaciones, null, 2))
+}
+async function ejecutarRevisarTareasCadaMinuto() {
+    while (true) {
+        await revisarSincronizacion();
+        await new Promise(resolve => setTimeout(resolve, 30000)); // Esperar 1 minuto
+    }
+}
+ejecutarRevisarTareasCadaMinuto();
+async function guardarSyncronizador(estudiantes, repetidor, minutos,mensaje,idusuario){
+    var horaSuma = Date.now();
+    var milisegundosAAgregar = minutos * 60 * 1000;
+    horaSuma +=milisegundosAAgregar;
+    var json = {'repetidor':repetidor, 'estudiantes':estudiantes, 'milisegundos':horaSuma,'minutos':minutos, 'mensaje':mensaje, 'idusuario':idusuario}
+    var data = await leerSyncronizador();
+    var dataOrdenado = await ordenarSyncronizador(data, json)
+    fs.writeFileSync(configPath, JSON.stringify(dataOrdenado, null, 2))
+}
+async function leerSyncronizador(){
+    const data = fs.readFileSync(configPath);
+    return JSON.parse(data)
+}
+async function ordenarSyncronizador(sincronizaciones, nuevoJson){
+    var nuevaLista=[]
+    var flag = false;
+    for(var i=0;i<sincronizaciones.length;i++){
+        var horaS = sincronizaciones[i].milisegundos
+        var horaNueva = nuevoJson.milisegundos
+        if(horaS<horaNueva){
+                nuevaLista.push(sincronizaciones[i])
+        }else{
+                nuevaLista.push(nuevoJson)
+                nuevaLista.push(sincronizaciones[i])
+                flag =true;
+        }
+    }
+    if(!flag){
+        nuevaLista.push(nuevoJson)
+    }
+    return nuevaLista
+}
 async function enviarMensajeDesdeCliente(idCliente, numeroDestino, mensaje) {
     try {
         var cliente = clientes[idCliente];
@@ -15,11 +92,17 @@ async function enviarMensajeDesdeCliente(idCliente, numeroDestino, mensaje) {
         return false; 
     }
 }
-
+app.get('/repetir',async(req,res)=>{
+    var idusuario = req.query.idusuario;
+    var estudiantes= req.query.celulares
+    var mensaje =  req.query.mensaje
+    var repetidor =  req.query.repetidor
+    var tiempo =  req.query.tiempo
+    var res = await guardarSyncronizador(estudiantes,repetidor,tiempo,mensaje,idusuario)
+})
 app.get('/conectar',async(req,res)=>{
     res.sendStatus(200)
-    console.log(req.query.id)
-   
+    
     var cliente = new Client({
         puppeteer: {
             headless: false

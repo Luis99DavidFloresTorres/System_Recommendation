@@ -1,3 +1,6 @@
-2024/06/11-22:54:22.406 405c Reusing MANIFEST E:\Sistema recomendacion\System_Recommendation\whatsapp\.wwebjs_auth\session-cliente_2\Default\Local Storage\leveldb/MANIFEST-000001
-2024/06/11-22:54:22.409 405c Recovering log #6
-2024/06/11-22:54:22.410 405c Reusing old log E:\Sistema recomendacion\System_Recommendation\whatsapp\.wwebjs_auth\session-cliente_2\Default\Local Storage\leveldb/000006.log 
+2024/06/19-21:31:06.753 16c4 Reusing MANIFEST E:\Sistema recomendacion\System_Recommendation\whatsapp\.wwebjs_auth\session-cliente_2\Default\Local Storage\leveldb/MANIFEST-000001
+2024/06/19-21:31:06.767 16c4 Recovering log #12
+2024/06/19-21:31:06.767 16c4 Reusing old log E:\Sistema recomendacion\System_Recommendation\whatsapp\.wwebjs_auth\session-cliente_2\Default\Local Storage\leveldb/000012.log 
+2024/06/19-21:32:07.610 2c10 Level-0 table #16: started
+2024/06/19-21:32:07.615 2c10 Level-0 table #16: 13571 bytes OK
+2024/06/19-21:32:07.618 2c10 Delete type=0 #12

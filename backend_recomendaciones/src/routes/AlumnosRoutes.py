@@ -29,7 +29,6 @@ def findById(id):
     jsn = jsonify({'estudiante':estudiante})
     return jsn, 200
 @main.route('guardarEstudiante', methods=['POST'])
-@jwt_required()
 def agregar():
     body = request.json
     result = StudentServices.agregarEstudiante(body['nombreuniversidad']
@@ -40,6 +39,15 @@ def agregar():
     if result==2:
         return {'res':'id repetido'},200
     return {'res': 'no se pudo guardar'}, 500
+@main.route('guardarEstudiantes', methods=['POST'])
+@jwt_required()
+def agregarEstudiantes():
+    body = request.json
+    for i in body:
+        result = StudentServices.agregarEstudiante(i['nombreuniversidad']
+                                      ,i['area'],i['nombretitulo'],i['nombrecompleto'],
+                                      i['celular'],i['edad_rango'],i['rango_ano_titulacion'])
+    return {'res':'correcto'},200
 @main.route('editarEstudiante', methods=['POST'])
 @jwt_required()
 def editar():

@@ -18,6 +18,7 @@ def conectar():
     print(current_user['id'])
     response = requests.get(os.getenv('url_sistema_whats')+'conectar',params={'id': current_user['id']}, timeout=130)
     return {'mensaje':'exito'},200
+
 @usuario.route('prueba',methods=['GET'])
 def prueba():
     url = 'https://recomendaciones-cursos.cepi.bo/backend/alumnos/guardarEstudiante'
